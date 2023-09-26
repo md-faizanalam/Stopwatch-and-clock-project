@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stopwatch Clock With JavaScript ||| Z & Creations</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="content">
+            <div class="nav_bar">
+                <nav class="nav">
+                    <!-- <i class="fa fa-bell"></i> -->
+                    <i class="fa fa-clock-o"></i>
+                    <!-- <i class="fa fa-home"></i> -->
+                    <i class="fa fa-stop-circle-o"></i>
+                </nav>
+            </div>
+            <!------ Alarm Clock Tab --------->
+            <div class="tab alarm_clock">
+
+            </div>
+            <!-------Time Clock Tab------>
+            <div class="tab time_clock">
+                <div class="show_time">
+                    <div class="time">
+                        <div class="time_hour">00</div> :
+                        <div class="time_minute">00 </div>
+                        <span class="time_sec">00</span>
+                        <div class="time_date_box">
+                            <span class="time_year">Year</span><br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--------Timer tab ---------->
+            <div class="tab timer_clock">
+            </div>
+            <!-------- Stopwatch Tab--------->
+            <div class="tab stopwatch_clock">
+                <div class="clock_circle">
+                    <span class="box min_box">00</span><sup class="label">M</sup>
+                    <span class="box sec_box">00</span><sup class="label">S</sup>
+                    <span class="box mili_sec_box">00</span>
+                </div>
+                <div class="timer_btns">
+                    <button class="timer_btn reset_btn" onclick="reset_timer()" disabled><i
+                            class="fa fa-refresh"></i></button>
+                    <button class="timer_btn start_pause_btn" onclick="start_pause()"><i
+                            class="fa fa-play"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="left_hidden_box"></div>
+    <div class="right_hidden_box"></div>
+</body>
+<script src="index.js"></script>
+
+</html>

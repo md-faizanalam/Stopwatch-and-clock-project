@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stopwatch Clock With JavaScript ||| Z & Creations</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+body{
+    background: rgba(0,0,0,0.7);
+    color: #fff;
+    text-align: center;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.container{
+    width: 30%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgb(64, 167, 214);
+    border-radius: 5px;
+    border-top: 1px solid #fff;
+    border-left: 1px solid #fff;
+    overflow: hidden!important;
+    transition: 0.5s ease;
+}
+.colors{
+    color: #40a7d6;
+    color: #a9a9a9;
+    color: #bc8f93;
+    color: #535051;
+}
+.content{
+    min-height: 99vh;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    overflow: hidden;
+}
+.alarm_clock, .time_clock, .timer_clock, .stopwatch_clock{
+    transition: 0.7s ease;
+    width: 30%;
+    height: 92vh;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    border-radius: 10px;
+    transform: translate(-100%, 0%);
+    opacity: 0;
+    visibility: hidden;
+}
+.alarm_clock{
+    background: grey;
+}
+.time_clock{
+    background: transparent;
+}
+.timer_clock{
+    background: #bc8f93;
+}
+/* ===== Time ======= */
+.time_clock{
+    align-items: flex-start;
+    padding-top: 70px;
+}
+.time_hour, .time_minute, .am-pm_box{
+    display: inline-block;
+}
+.show_time .time{
+    font-size: 60px;
+}
+.show_time .time .time_sec{
+    font-size: 20px;
+}
+.time_date_box{
+    font-size: 20px;
+}
+/* ===== StopWatch ===== */
+.stopwatch_clock{
+    visibility: visible;
+    opacity: 1;
+    /* background: rgb(64, 167, 214); */
+    flex-direction: column;
+    transform: translate(0%, 0%);
+}
+.clock_circle{
+    width: 210px;
+    height: 210px;
+    top: 45%;
+    border-radius: 50%;
+    border: 5px solid #fff;
+    margin-top: -80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.stopwatch_clock .box{
+    font-size: 50px;
+    font-weight: lighter;
+    width: 55px;
+}
+.label{
+    font-size: 12px;
+    margin-top: -20px;
+    padding-right: 5px;
+}
+.mili_sec_box{
+    font-size: 20px!important;
+    margin-top: 30px;
+    width: 35px!important;
+    text-align: right;
+}
+.timer_btns{
+    width: 100%;
+    position: absolute;
+    padding: 10px 0px;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.timer_btn{
+    width: 50px;
+    height: 50px;
+    font-size: 15px;
+    outline: none;
+    border: none;
+    border-radius: 50%;
+    transition: 0.3s ease;
+    margin: 0px 50px;
+}
+.reset_btn{
+    background: rgba(255,255,255,0.3);
+}
+.start_pause_btn{
+    background: rgb(255, 72, 103);
+    color: #fff;
+}
+.fa-play, .fa-pause{
+    font-weight: 100!important;
+}
+.timer_btn:hover{
+    background: rgb(231, 66, 94);
+}
+.nav_bar{
+    position: absolute;
+    top: 0;
+    width: 30%;
+    margin: 0 auto;
+    height: auto;
+    /* border: 1px solid #fff; */
+    padding: 5px;
+}
+.nav{
+    width: 100%;
+    padding: 0px 30px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.nav .fa{
+    font-size: 20px;
+    padding: 10px;
+    transition: 0.7s ease;
+}
+.nav .fa:hover{
+    background: rgba(255,255,255,0.5);
+    box-shadow: 0px 0px 10px 1px rgba(255,255,255,0.5);
+    border-radius: 50%;
+}
+
+.left_hidden_box{
+    width: 35%;
+    height: 100vh;
+    background: rgb(53, 53, 53);
+    position: absolute;
+    z-index: 9999;
+    left: 0px;
+}
+.right_hidden_box{
+    width: 35%;
+    height: 100vh;
+    background: rgb(53, 53, 53);
+    position: absolute;
+    z-index: 9999;
+    right: 0px;
+}
+@media only screen and (max-width: 450px){
+    .container{
+        width: 100%!important;
+        height: auto;
+        border: none!important;
+        border-radius: 0px!important;
+    }
+    .left_hidden_box, .right_hidden_box{
+        display: none;
+        width: 0;
+    }
+    .timer_btn{
+        width: 50px;
+        height: 50px;
+        font-size: 15px;
+        outline: none;
+        border: none;
+        border-radius: 50%;
+        transition: 0.3s ease;
+        margin: 0px 50px;
+    }
+}
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="content">
+            <div class="nav_bar">
+                <nav class="nav">
+                    <!-- <i class="fa fa-bell"></i> -->
+                    <i class="fa fa-clock-o"></i>
+                    <!-- <i class="fa fa-home"></i> -->
+                    <i class="fa fa-stop-circle-o"></i>
+                </nav>
+            </div>
+            <!------ Alarm Clock Tab --------->
+            <div class="tab alarm_clock">
+
+            </div>
+            <!-------Time Clock Tab------>
+            <div class="tab time_clock">
+                <div class="show_time">
+                    <div class="time">
+                        <div class="time_hour">00</div> :
+                        <div class="time_minute">00 </div>
+                        <span class="time_sec">00</span>
+                        <div class="time_date_box">
+                            <span class="time_year">Year</span><br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--------Timer tab ---------->
+            <div class="tab timer_clock">
+            </div>
+            <!-------- Stopwatch Tab--------->
+            <div class="tab stopwatch_clock">
+                <div class="clock_circle">
+                    <span class="box min_box">00</span><sup class="label">M</sup>
+                    <span class="box sec_box">00</span><sup class="label">S</sup>
+                    <span class="box mili_sec_box">00</span>
+                </div>
+                <div class="timer_btns">
+                    <button class="timer_btn reset_btn" onclick="reset_timer()" disabled><i
+                            class="fa fa-refresh"></i></button>
+                    <button class="timer_btn start_pause_btn" onclick="start_pause()"><i
+                            class="fa fa-play"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="left_hidden_box"></div>
+    <div class="right_hidden_box"></div>
+</body>
+<script>
+    // -------------Slider -------------
+var tabs = document.querySelectorAll('.tab');
+var alarm_tab = tabs[0];
+var clock_tab = tabs[1];
+var timer_tab = tabs[2];
+var stopwatch_tab = tabs[3];
+var nav_btns = document.querySelectorAll('.nav .fa');
+var change_tab_css = {
+    'show': {
+        'visibility': 'visible',
+        'transform': 'translate(0%, 0%)',
+        'opacity': '1',
+        'z-index': '9'
+    },
+    'hide': {
+        'visibility': 'hidden',
+        'opacity': '0',
+        'transform': 'translate(-100%, 0%)',
+        'z-index': '1'
+    }
+}
+nav_btns.forEach(function (slide_btn) {
+    slide_btn.onclick = () => {
+        if (slide_btn.classList.contains('fa-bell')) {
+            console.log('Alarm');
+            Object.assign(alarm_tab.style, change_tab_css.show);
+            Object.assign(clock_tab.style, change_tab_css.hide);
+            Object.assign(timer_tab.style, change_tab_css.hide);
+            Object.assign(stopwatch_tab.style, change_tab_css.hide);
+            document.querySelector('.container').style.background = 'grey';
+        }
+        else if (slide_btn.classList.contains('fa-clock-o')) {
+            console.log('Clock');
+            Object.assign(alarm_tab.style, change_tab_css.hide);
+            Object.assign(clock_tab.style, change_tab_css.show);
+            Object.assign(timer_tab.style, change_tab_css.hide);
+            Object.assign(stopwatch_tab.style, change_tab_css.hide);
+            document.querySelector('.container').style.background = '#a9a9a9';
+        }
+        else if (slide_btn.classList.contains('fa-home')) {
+            console.log('Timer');
+            Object.assign(alarm_tab.style, change_tab_css.hide);
+            Object.assign(clock_tab.style, change_tab_css.hide);
+            Object.assign(timer_tab.style, change_tab_css.show);
+            Object.assign(stopwatch_tab.style, change_tab_css.hide);
+            document.querySelector('.container').style.background = '#bc8f93';
+        }
+        else if (slide_btn.classList.contains('fa-stop-circle-o')) {
+            console.log('Stopwatch');
+            Object.assign(alarm_tab.style, change_tab_css.hide);
+            Object.assign(clock_tab.style, change_tab_css.hide);
+            Object.assign(timer_tab.style, change_tab_css.hide);
+            Object.assign(stopwatch_tab.style, change_tab_css.show);
+            document.querySelector('.container').style.background = '#535051';
+        }
+    }
+})
+
+var bg_colors = ['#40a7d6', '#a9a9a9', '#bc8f93', '#535051'];
+color_count = 0;
+setInterval(() => {
+    if(color_count == bg_colors.length -1){
+        color_count = 0; 
+    }
+    else{
+        color_count ++;
+    }
+    document.querySelector('.container').style.background = bg_colors[color_count];
+}, 1000 * 60)
+
+// -----------Clock --------------
+var hour;
+var minute;
+var second;
+var year;
+setInterval(() => {
+    var time = new Date();
+    hour = time.getHours();
+    minute = time.getMinutes();
+    second = time.getSeconds();
+    document.querySelector('.time_hour').innerHTML = hour;
+    document.querySelector('.time_minute').innerHTML = minute;
+    document.querySelector('.time_sec').innerHTML = second;
+}, 1000);
+
+const options = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
+setInterval(() => {
+    var date = new Date();
+    year = date.toLocaleDateString(undefined, options);
+    document.querySelector('.time_year').innerHTML = year;
+}, 2000)
+
+// ---------- Timer --------------
+var box = document.querySelectorAll('.box');
+var min_count = 0;
+var sec_count = 0;
+var milli_sec_count = 0;
+start_val = 0;
+var min_interval = 0;
+var sec_interval = 0;
+var milli_sec_interval = 0;
+
+function start_timer() {
+    min_interval = setInterval(() => {
+        if (min_count == 60) {
+            min_count = 0;
+            min_count++;
+        }
+        else {
+            min_count++;
+        }
+        box[0].innerHTML = min_count;
+    }, 1000 * 60);
+    sec_interval = setInterval(() => {
+        if (sec_count == 60) {
+            sec_count = 0;
+            sec_count++;
+        }
+        else {
+            sec_count++;
+        }
+        box[1].innerHTML = sec_count;
+    }, 1000);
+    milli_sec_interval = setInterval(() => {
+        if (milli_sec_count == 100) {
+            milli_sec_count = 0;
+            milli_sec_count++;
+        }
+        else {
+            milli_sec_count++;
+        }
+        box[2].innerHTML = milli_sec_count;
+    }, 1);
+}
+function start_pause() {
+    var start_btn = document.querySelector('.start_pause_btn');
+    if (start_val == 0) {
+        start_btn.innerHTML = '<i class="fa fa-pause"></i>';
+        document.querySelector('.reset_btn').disabled = false;
+        start_val = 1;
+        start_timer();
+    } else {
+        start_btn.innerHTML = '<i class="fa fa-play"></i>';
+        // document.querySelector('.reset_btn').disabled = true;
+        start_val = 0;
+        clearInterval(min_interval);
+        clearInterval(sec_interval);
+        clearInterval(milli_sec_interval);
+    }
+}
+function reset_timer() {
+    min_count = 0;
+    sec_count = 0;
+    milli_sec_count = 0;
+    start_val = 0;
+    box[0].innerHTML = '00';
+    box[1].innerHTML = '00';
+    box[2].innerHTML = '00';
+    clearInterval(min_interval);
+    clearInterval(sec_interval);
+    clearInterval(milli_sec_interval);
+    document.querySelector('.reset_btn').disabled = true;
+    document.querySelector('.start_pause_btn').innerHTML = '<i class="fa fa-play"></i>';
+}
+
+</script>
+
+</html>
